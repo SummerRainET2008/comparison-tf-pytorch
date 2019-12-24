@@ -11,16 +11,16 @@ from pa_nlp.tf_2x.lamb_optimizer import LAMBOptimizer
 class Trainer:
   def __init__(self):
     self._model = Model()
-    self._optimizer = tf.keras.optimizers.Adam(learning_rate=param.lr)
-    # self._optimizer = LAMBOptimizer(learning_rate=param.lr)
-    #self._optimizer = tf.keras.optimizers.RMSprop(learning_rate=param.lr)
+    # self._optimizer = tf.keras.optimizers.Adam(learning_rate=param.lr)
+    self._optimizer = LAMBOptimizer(learning_rate=param.lr)
+    # self._optimizer = tf.keras.optimizers.RMSprop(learning_rate=param.lr)
 
-  # @tf.function(
-  #   input_signature=(
-  #     tf.TensorSpec(shape=[None, None], dtype=tf.int32),
-  #     tf.TensorSpec(shape=[None, None], dtype=tf.int32)
-  #   )
-  # )
+  @tf.function(
+    input_signature=(
+      tf.TensorSpec(shape=[None, None], dtype=tf.int32),
+      tf.TensorSpec(shape=[None, None], dtype=tf.int32)
+    )
+  )
   def _train_one_batch(self, src, trg):
     print(f"retracing _train_one_batch({src.shape}, {trg.shape})")
     with tf.GradientTape() as tape:
