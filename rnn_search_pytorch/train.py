@@ -153,7 +153,6 @@ parser.add_argument(
   help='path to save the model'
 )
 parser.add_argument('--freq', type=int, help='frequency for save')
-parser.add_argument('--cuda', action='store_true', help='use cuda')
 parser.add_argument('--gpu_id', type=int, help='')
 parser.add_argument(
   '--epoch_num', type=int, default=10, help='default  10.'
@@ -168,7 +167,7 @@ if opt.gpu_id:
   opt.seed += opt.gpu_id
 torch.manual_seed(opt.seed)
 
-opt.cuda = opt.cuda and torch.cuda.is_available()
+opt.cuda = torch.cuda.is_available()
 if opt.cuda:
   torch.cuda.manual_seed(opt.seed)
 
