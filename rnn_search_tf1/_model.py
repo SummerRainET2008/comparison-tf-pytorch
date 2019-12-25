@@ -196,7 +196,8 @@ class Model(tf.keras.Model):
       # using teacher forcing
       dec_input = tf.expand_dims(trg[:, i], 1)
 
-    return loss
+    num = tf.reduce_sum(tf.cast(tf.not_equal(trg, 0), tf.float32))
+    return loss / num
 
   def _loss_function(self, real, pred):
     Logger.debug(
@@ -207,4 +208,4 @@ class Model(tf.keras.Model):
     loss_ = self.loss_object(real, pred)
     mask = tf.cast(mask, dtype=loss_.dtype)
     loss_ *= mask
-    return tf.reduce_mean(loss_) # mean loss of a batch
+    return tf.reduce_sum(loss_) # mean loss of a batch
