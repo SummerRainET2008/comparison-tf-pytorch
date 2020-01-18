@@ -25,6 +25,8 @@ class dataset(torch.utils.data.Dataset):
           or (trg_max_len and len(line[1]) > trg_max_len):
         continue
       self.data.append(line)
+
+    self.data = self.data * 1024
     self.length = len(self.data)
 
   def __len__(self):
